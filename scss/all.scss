@@ -62,6 +62,7 @@ ul, li{
     width: 50px;
     border: solid 1px #000;
     border-radius: 50%;
+
     
 }
 
@@ -78,7 +79,7 @@ ul, li{
     background: #000;
     position: absolute;
     bottom:146px;
-    left: 130px;
+    left: 129px;
     color: #fff;
     font-size: 12px;
     text-align: center;
@@ -93,4 +94,11 @@ ul, li{
 
 .beActive {
  color:#ff00ba;
+}
+
+.c-yellow{
+  background:  #fff500;
+}
+.c-orange{
+  background: #ff7f44;
 }

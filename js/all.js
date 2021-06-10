@@ -1,7 +1,6 @@
 // https://www.bilibili.com/video/av18751303/?spm_id_from=333.788.videocard.6
-
-const app = Vue.createApp({
-
+import { createApp } from 'https://cdnjs.cloudflare.com/ajax/libs/vue/3.0.11/vue.esm-browser.js';
+createApp({
     template: `
     <div class="circlePanel">
         <div class="pieImg">
@@ -25,7 +24,7 @@ const app = Vue.createApp({
         </div>
         
     </div>
-    
+  
 
 
     `,
@@ -38,7 +37,7 @@ const app = Vue.createApp({
             //優惠券數量
             itemNum: 0,
             //起始角度
-            start_deg: 0,
+            start_deg: 42.5,
             //旋轉圈數
             circle: 4,
             //旋轉角度
@@ -58,7 +57,7 @@ const app = Vue.createApp({
             axios.get(`data.json`)
                 .then(
                     res => {
-                        console.log(res);
+                        // console.log(res);
                         if (res.status == 200) {
                             this.localJsonData = res.data;
                         } else {
@@ -77,6 +76,8 @@ const app = Vue.createApp({
         //旋轉
         rotateArrow() {
             this.degree = this.circle * 360 + this.start_deg +this.deg * this.mathNumber ;
+            
+            
             $(() => {
                 $('#pieArrow').rotate({
                     angle: this.start_deg,// 旋轉指定角度(沒有動畫)
@@ -84,12 +85,12 @@ const app = Vue.createApp({
                     animateTo: this.degree,//旋轉多少角度(有動畫)
                     callback: () => {//旋轉結束後回傳結果
                         console.log(this.degree)
-                        console.log(this.number)
-                        console.log(this.localJsonData[this.mathNumber].name)
-                        alert(this.localJsonData[this.mathNumber].name)
                         this.start_deg = this.degree % 360;
+                        console.log(this.localJsonData[this.number.indexOf(this.start_deg)].name)
+                        
+                        alert(this.localJsonData[this.number.indexOf(this.start_deg)].name)
+                        
                         console.log(this.start_deg)
-
                         
                     },
                 });
@@ -108,7 +109,10 @@ const app = Vue.createApp({
         start_deg() {
                              //旋轉圈數    +     起始位子            +平均角度 *亂數
             this.degree = this.circle * 360 + this.start_deg + this.deg * this.mathNumber ;
-        }
+        },
+        deg(){
+            this.number =  [42.5,87.5,132.5,177.5,222.5,267.5,312.5,357.5]
+        },
     },
     created() {
         this.getLocalJson();
@@ -118,6 +122,34 @@ const app = Vue.createApp({
     mounted(){
         
     },
-});
+})
 
-app.mount("#app");
+.component('changeColor',{
+    props:['localJsonData','deg'],
+    template:`
+    <div class="circlePanel">
+        <div class="pieImg">
+        <ul class='pie'>
+            <li v-for="(item,i) in localJsonData" :key="i" class='slice' :style = "{transform: 'rotate(' + deg * i + 'deg)' + 'skewY(' + (deg - 90 ) + 'deg)' }" :class="[  i % 2 ==0 ? 'bg-dark':'bg-danger']"   > 
+                <ul  class="pieItem text-center fw-bold"  :class="item.color" :style = "{transform: 'rotate( '+ (deg+3) +'deg)' + 'skewY(' + (deg -37 ) + 'deg)' }">               
+                   
+                    <li>{{item.name}}</li>
+                     <li><span class="material-icons fz-14">
+                    {{item.icon}}
+                    </span></li>
+                </ul>
+            </li>
+        </ul>
+        <div class="pieArrow" id="pieArrow" >
+        <div class="position-relative" >
+        <img   class="pieArrowImg" src="./imgage/component.png" alt=""> 
+        </div>
+        </div>
+        <div class="piePress"><a  href="#" >PRESS</a></div> 
+        </div>
+        
+    </div>
+    `,
+})
+
+.mount("#app");
