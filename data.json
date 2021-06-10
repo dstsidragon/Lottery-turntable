@@ -1,0 +1,44 @@
+[
+     {
+         "name":"狂打7折",
+         "icon":"sentiment_very_satisfied",
+         "color":"text-danger"
+
+     },{
+        "name":"銘謝惠顧",
+        "icon":"sentiment_very_dissatisfied",
+        "color":"text-white"
+
+    },{
+        "name":"打87折",
+        "icon":"sentiment_very_satisfied",
+        "color":"text-danger"
+
+    },{
+        "name":"別想打折",
+        "icon":"sentiment_very_dissatisfied",
+        "color":"text-white"
+
+    },{
+        "name":"打95折",
+        "icon":"sentiment_very_satisfied",
+        "color":"text-danger"
+
+    },{
+        "name":"再接再厲",
+        "icon":"sentiment_very_dissatisfied",
+        "color":"text-white"
+
+    },{
+        "name":"全館半價",
+        "icon":"sentiment_very_satisfied",
+        "color":"text-danger"
+
+    },{
+        "name":"下次再拚",
+        "icon":"sentiment_very_dissatisfied",
+        "color":"text-white"
+
+    }
+]
+
