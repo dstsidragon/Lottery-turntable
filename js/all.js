@@ -1,33 +1,6 @@
 // https://www.bilibili.com/video/av18751303/?spm_id_from=333.788.videocard.6
 import { createApp } from 'https://cdnjs.cloudflare.com/ajax/libs/vue/3.0.11/vue.esm-browser.js';
 createApp({
-    template: `
-    <div class="circlePanel">
-        <div class="pieImg">
-        <ul class='pie'>
-            <li v-for="(item,i) in localJsonData" :key="i" class='slice' :style = "{transform: 'rotate(' + deg * i + 'deg)' + 'skewY(' + (deg - 90 ) + 'deg)' }" :class="[  i % 2 ==0 ? 'bg-dark':'bg-danger']"   > 
-                <ul  class="pieItem text-center fw-bold"  :class="item.color" :style = "{transform: 'rotate( '+ (deg+3) +'deg)' + 'skewY(' + (deg -37 ) + 'deg)' }">               
-                   
-                    <li>{{item.name}}</li>
-                     <li><span class="material-icons fz-14">
-                    {{item.icon}}
-                    </span></li>
-                </ul>
-            </li>
-        </ul>
-        <div class="pieArrow" id="pieArrow" >
-        <div class="position-relative" >
-        <img   class="pieArrowImg" src="./imgage/component.png" alt=""> 
-        </div>
-        </div>
-        <div class="piePress"><a  @click="rotateArrow" href="#" >PRESS</a></div> 
-        </div>
-        
-    </div>
-  
-
-
-    `,
     data() {
         return {
             //JSON 資料
@@ -120,18 +93,19 @@ createApp({
         
     },
     mounted(){
-        
     },
 })
 
 .component('changeColor',{
     props:['localJsonData','deg'],
     template:`
-    <div class="circlePanel">
+    <h2 class="mt-5 text-center h1 border text-white bg-dark"> 更換顏色</h2>
+    <div class=" d-flex justify-content-center align-items-center">
+    <div class="circlePanel" :key="2">
         <div class="pieImg">
         <ul class='pie'>
-            <li v-for="(item,i) in localJsonData" :key="i" class='slice' :style = "{transform: 'rotate(' + deg * i + 'deg)' + 'skewY(' + (deg - 90 ) + 'deg)' }" :class="[  i % 2 ==0 ? 'bg-dark':'bg-danger']"   > 
-                <ul  class="pieItem text-center fw-bold"  :class="item.color" :style = "{transform: 'rotate( '+ (deg+3) +'deg)' + 'skewY(' + (deg -37 ) + 'deg)' }">               
+            <li v-for="(item,i) in localJsonData" :key="i" class='slice' :style = "{transform: 'rotate(' + deg * i + 'deg)' + 'skewY(' + (deg - 90 ) + 'deg)' }" :style="[  i % 2 ==0 ? goodItemBackgroundColorClass:badItemBackgroundColorClass]"   > 
+                <ul  class="pieItem text-center fw-bold"   :style = "{transform: 'rotate( '+ (deg+3) +'deg)' + 'skewY(' + (deg -37 ) + 'deg)' }" :style="[  i % 2 ==0 ? goodItemColorClass:badItemColorClass]" >               
                    
                     <li>{{item.name}}</li>
                      <li><span class="material-icons fz-14">
@@ -149,7 +123,65 @@ createApp({
         </div>
         
     </div>
+
+    <div class="colorPanel ms-2">
+            <div>
+                <label for="goodItemColor">中獎字體顏色</label>
+                <input  type="color" v-model="this.goodItemColor">
+                <input id="goodItemColor" type="text" v-model="this.goodItemColor">
+            </div>
+            <div>
+              <label for="goodItemBackgroundColor">中獎區塊顏色</label>
+              <input type="color" v-model="this.goodItemBackgroundColor">
+              <input id="goodItemBackgroundColor" type="text" v-model="this.goodItemBackgroundColor">
+          </div>
+            <div>
+              <label for="badItemColor">落獎字體顏色</label>
+              <input type="color" v-model="this.badItemColor">
+              <input id="badItemColor" type="text" v-model="this.badItemColor">
+             </div>
+             <div>
+              <label for="badItemBackgroundColor">落獎區塊顏色</label>
+              <input type="color"  v-model="this.badItemBackgroundColor">
+              <input id="badItemBackgroundColor" type="text" v-model="this.badItemBackgroundColor">
+          </div>
+        </div>
+        </div>
     `,
+    data(){
+        return{
+            goodItemColor:"#ffffff",
+            goodItemBackgroundColor:"#dc3545",
+            badItemColor:"#dc3545",
+            badItemBackgroundColor:"#212529",
+            goodItemColorClass:'',
+            goodItemBackgroundColorClass:'',
+            badItemColorClass:'',
+            badItemBackgroundColorClass:'',
+
+        }
+    },
+    watch:{
+        goodItemColor(){
+            this.goodItemColorClass = `color:${this.goodItemColor}`;
+        },
+        goodItemBackgroundColor(){
+            this.goodItemBackgroundColorClass = `background:${this.goodItemBackgroundColor};`;
+        },
+        badItemColor(){
+            this.badItemColorClass = `color:${this.badItemColor}`;
+        },
+        badItemBackgroundColor(){
+            this.badItemBackgroundColorClass = `background:${this.badItemBackgroundColor}`;
+        },
+    },
+    
+    mounted(){
+        this.goodItemColorClass = `color:${this.goodItemColor}`;
+        this.goodItemBackgroundColorClass = `background:${this.goodItemBackgroundColor}`;
+        this.badItemColorClass = `color:${this.badItemColor}`;
+        this.badItemBackgroundColorClass = `background:${this.badItemBackgroundColor}`;
+    },
 })
 
 .mount("#app");
